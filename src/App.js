@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const list = [
+const list_a = [
   {
     title: 'React',
     url: 'https://reactjs.org',
@@ -21,10 +21,19 @@ const list = [
 ];
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      list_b: list_a,
+    };
+  }
+
   render() {
+    const { list_b } = this.state;
     return (
       <div className="App">
-        {list.map(item => 
+        {list_b.map(item => 
             <div key={item.objectID}>
               <span>
                 <a href={item.url} > {item.title}</a>
