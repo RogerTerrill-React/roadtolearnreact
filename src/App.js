@@ -53,7 +53,7 @@ class App extends Component {
             <span>{item.num_comments}</span>
             <span>{item.points}</span>
             <span>
-              <button onClick={onHandleDismiss} type="button">
+              <button onClick={() => console.log(item.objectID)} type="button">
                 Dismiss
               </button>
             </span>
