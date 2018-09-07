@@ -54,13 +54,15 @@ class App extends Component {
   }
 
   render() {
-    const { list_b } = this.state;
+
+    const { list_b, searchTerm } = this.state;
+    
     return (
       <div className="App">
         <form>
-          <input type="text" onChange={this.onSearchChange}/>
+          <input type="text" value={searchTerm} onChange={this.onSearchChange}/>
         </form>
-        {list_b.filter(isSearched(this.state.searchTerm)).map(item => { 
+        {list_b.filter(isSearched(searchTerm)).map(item => { 
           const onHandleDismiss = () => this.onDismiss(item.objectID);
           return (
             <div key={item.objectID}>
