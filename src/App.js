@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import Table from './Table';
+import Search from './Search';
 
 const list_a = [
   {
@@ -59,28 +61,8 @@ class App extends Component {
     
     return (
       <div className="App">
-        <form>
-          <input type="text" value={searchTerm} onChange={this.onSearchChange}/>
-        </form>
-        {list_b.filter(isSearched(searchTerm)).map(item => { 
-          const onHandleDismiss = () => this.onDismiss(item.objectID);
-          return (
-            <div key={item.objectID}>
-            <span>
-              <a href={item.url} > {item.title}</a>
-            </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-            <span>
-              <button onClick={onHandleDismiss} type="button">
-                Dismiss
-              </button>
-            </span>
-          </div>
-          );
-        }
-        )}
+        <Search value={searchTerm} onChange={this.onSearchChange} />
+        <Table list_c={list_b} pattern={searchTerm} onDismiss={this.onDismiss} />
       </div>
     );
   }
