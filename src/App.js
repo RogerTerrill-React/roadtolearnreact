@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Table from './Table';
-import Search from './Search';
+//import Table from './Table';
+//import Search from './Search';
 
 const list_a = [
   {
@@ -30,6 +30,45 @@ const list_a = [
 
 const isSearched = searchTerm => item => 
   item.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+const Search = ({value, onChange, children}) =>
+  <form>
+    {children} 
+    <input
+      type="text"
+      value={value}
+      onChange={onChange}
+    />
+  </form>
+
+const Button = ({onClick, className, children}) =>
+  <button
+    onClick={onClick}
+    className={className}
+    type="button"
+  >
+    {children}
+  </button>
+
+const Table = ({list_c, pattern, onDismiss}) =>
+  <div>
+    {list_c.filter(isSearched(pattern)).map(item =>
+    <div key={item.objectID}>
+        <span>
+            <a href={item.url} > {item.title}</a>
+        </span>
+        <span>{item.author}</span>
+        <span>{item.num_comments}</span>
+        <span>{item.points}</span>
+        <span>
+            <Button onClick={()=>onDismiss(item.objectID)}>
+                Dismiss
+            </Button>
+        </span>
+    </div>
+    )}
+</div>
+
 
 class App extends Component {
   constructor(props) {
@@ -67,7 +106,11 @@ class App extends Component {
         >
           Search
         </Search>
-        <Table list_c={list_b} pattern={searchTerm} onDismiss={this.onDismiss} />
+        <Table 
+          list_c={list_b} 
+          pattern={searchTerm} 
+          onDismiss={this.onDismiss} 
+        />
       </div>
     );
   }
