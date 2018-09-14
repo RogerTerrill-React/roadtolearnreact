@@ -29,9 +29,9 @@ const Button = ({ onClick, className, children }) =>
     {children}
   </button>
 
-const Table = ({ list_c, pattern, onDismiss }) =>
+const Table = ({ list, pattern, onDismiss }) =>
   <div className="table">
-    {list_c.filter(isSearched(pattern)).map(item =>
+    {list.filter(isSearched(pattern)).map(item =>
       <div key={item.objectID} className="table-row">
         <span style={{ width: '40%' }}> 
           <a href={item.url}>{item.title}</a> 
@@ -111,7 +111,7 @@ class App extends Component {
             Search
           </Search>
           <Table
-            list_c={result.hits}
+            list={result.hits}
             pattern={searchTerm}
             onDismiss={this.onDismiss}
           />
