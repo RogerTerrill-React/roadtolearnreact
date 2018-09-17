@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
+const DEFAULT_HPP = '100';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH ='query=';
-const PARAM_PAGE = 'page='
+const PARAM_PAGE = 'page=';
+const PARAM_HPP = 'hitsPerPage=';
 
 const Search = ({ value, onChange, onSubmit, children }) =>
   <form onSubmit={onSubmit}>
@@ -89,12 +91,15 @@ class App extends Component {
     ];
 
     this.setState({ 
-      result: { hits: updatedHits, page} 
+      result: { 
+        hits: updatedHits, 
+        page: page
+      } 
     });
   }
 
   fetchSearchTopStories(searchTerm, page = 0){
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}`)
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
       .then(response => response.json()) // This is mandatory, convert to json
       .then(result => this.setSearchTopStories(result)) // Take previous results and pass to method to change state of result
       .catch(error => error); // Catch any errors
