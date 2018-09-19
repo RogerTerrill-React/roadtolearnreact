@@ -69,6 +69,7 @@ class App extends Component {
       results: null,
       searchKey: '',
       searchTerm: DEFAULT_QUERY,
+      error: null,
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -108,7 +109,7 @@ class App extends Component {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
       .then(response => response.json()) // This is mandatory, convert to json
       .then(result => this.setSearchTopStories(result)) // Take previous results and pass to method to change state of result
-      .catch(error => error); // Catch any errors
+      .catch(error => this.setState({error})); // Catch any errors
   }
 
   componentDidMount() {
@@ -152,7 +153,8 @@ class App extends Component {
     const { 
       searchTerm, 
       results, 
-      searchKey 
+      searchKey,
+      error 
     } = this.state;
 
     const page = (
@@ -166,6 +168,7 @@ class App extends Component {
       results[searchKey] &&
       results[searchKey].hits
     ) || [];
+
 
     return (
       <div className="page">
@@ -190,6 +193,15 @@ class App extends Component {
             </Button>
           </div>
         </div>
+        {error
+          ? <div className="interactions">
+          <p>Something went wrong.</p>
+          </div>
+          : <Table
+            list={list}
+            onDismiss={this.onDismiss}
+            />
+           }
       </div>
     );
   }
